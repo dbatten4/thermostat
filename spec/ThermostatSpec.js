@@ -6,6 +6,10 @@ describe ('Thermostat', function(){
     thermostat = new Thermostat;
   });
 
+  it ('temp equals 20 by default', function(){
+    expect(thermostat.temp).toEqual(20);
+  });
+
   it ('increases the temp', function(){
     thermostat.increase();
     expect(thermostat.temp).toEqual(21);
@@ -50,10 +54,43 @@ describe ('Thermostat', function(){
     for(var i=0; i<12; i++){
       thermostat.increase();
     };
-    console.log(thermostat.temp);
-    console.log(thermostat.powerSave);
     expect(function() { thermostat.increase(); }).toThrowError("Already at maximum temperature");
   });
 
+  it ("resets the temperature to 20 when the reset button is hit", function(){
+    thermostat.increase();
+    thermostat.resetTemp();
+    expect(thermostat.temp).toEqual(20);
+  });
+
+  it ("colour the display green if temp is <18", function(){
+    for(var i=0; i<3; i++){
+      thermostat.decrease();
+    };
+    expect(thermostat.displayColour).toEqual('green');
+  });
+
+  it ("colour the display yellow if temp is <25", function(){
+    for(var i=0; i<5; i++){
+      thermostat.increase();
+    };
+    thermostat.decrease();
+    expect(thermostat.displayColour).toEqual('yellow');
+  });
+
+  it ("colour the display red if temp is >=25", function(){
+    for(var i=0; i<5; i++){
+      thermostat.increase();
+    };
+    expect(thermostat.displayColour).toEqual('red');
+  });
+
+  it ("colour the display yellow if temp is >=18", function(){
+    for(var i=0; i<3; i++){
+      thermostat.decrease();
+    };
+    thermostat.increase();
+    expect(thermostat.displayColour).toEqual('yellow');
+  });
 
 });
