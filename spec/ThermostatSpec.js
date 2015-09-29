@@ -93,4 +93,13 @@ describe ('Thermostat', function(){
     expect(thermostat.displayColour).toEqual('yellow');
   });
 
+  it ("sets the temperature at 25 degrees if power save mode is turned on when above 25 degrees", function(){
+    thermostat.switchPowerSave();
+    for(var i=0; i<10; i++){
+      thermostat.increase();
+    };
+    thermostat.switchPowerSave();
+    expect(thermostat.temp).toEqual(25);
+  });
+
 });

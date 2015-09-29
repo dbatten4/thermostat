@@ -42,6 +42,9 @@ Thermostat.prototype._changeDisplayColour = function(){
 };
 
 Thermostat.prototype.switchPowerSave = function(){
+  if (this.powerSave == false && this.temp > 25) {
+    this.temp = 25;
+  };
   this.powerSave = !this.powerSave;
 };
 
